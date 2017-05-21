@@ -1,8 +1,161 @@
-<html>
-	<head>
-		<title>Invoice</title>
-	</head>
-	<body>
-		hi there
-	</body>
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Invoice</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="{% static "bootstrap/css/bootstrap.min.css" %}">
+	<link rel="stylesheet" href="{% static "bootstrap/css/invoice.css" %}">
+	<script src="{% static 'bootstrap/jquery.min.js' %}"></script>
+	<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+</head>
+<body>
+
+	<div class="invoice---01">
+		<div class="Rectangle">
+			<a class="Dashboard" href="{% url 'billing' %}">Dashboard</a>
+		</div>
+		<div class="Invoice-Details">
+			Invoice Details
+		</div>
+		<a href="#Customer_Modal" role="button" data-toggle="modal">
+			<div class="Oval">
+				<img src="static/images/plus.svg">
+			</div>
+		</a>
+		<div class="Rectangle-12">
+
+		</div>
+		<div class="Rectangle-6">
+			<div class="Rectangle-2">
+				<input name="Rectangle-2_1" type="text" placeholder="Search...">
+			</div>
+			<div class="Rectangle-list">
+
+			</div>
+
+		</div>
+
+
+
+	</div>
+
+<!-- Modal for Customer-Details -->
+<div id="Customer_Modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+				<div style="clear: both">
+    			<h4 class="Create-New-Invoice" style="float: left">Create New Invoice</h4>
+    			<h4 class="Order-No"style="float: right">ORDER NO:{{new}}</h4>
+				</div>
+				<div class="Customer-Details">
+					CUSTOMER DETAILS
+				</div>
+				<a href="#Bill_Modal" role="button" data-toggle="modal" data-dismiss="modal" style="text-decoration:none;">
+					<div class="skip-button">
+						<p class="skip">SKIP</p>
+					</div>
+				</a>
+      </div>
+      <div class="modal-body">
+				<table>
+				  <tr>
+				    <th>Full Name</th>
+						<th>&nbsp;&nbsp;&nbsp;</th>
+				    <th>Phone Number</th>
+				  </tr>
+				  <tr>
+				    <td><input name="name-box" type="text" placeholder="Customer Name" required></td>
+						<td>&nbsp;&nbsp;&nbsp;</td>
+				    <td><input name="phone-box" type="text" placeholder="+91"></td>
+				  </tr>
+				  <tr>
+				    <td>Address</td>
+						<td>&nbsp;&nbsp;&nbsp;</td>
+				    <td>Email Id</td>
+				  </tr>
+				  <tr>
+				    <td rowspan="3"><textarea name="address-box" placeholder="Complete Address"></textarea></td>
+						<td>&nbsp;&nbsp;&nbsp;</td>
+				    <td><input name="email-box" type="email" placeholder="Customer Email Address"></td>
+				  </tr>
+				  <tr>
+						<td>&nbsp;&nbsp;&nbsp;</td>
+				    <td>Pincode</td>
+				  </tr>
+				  <tr>
+						<td>&nbsp;&nbsp;&nbsp;</td>
+				    <td><input name="pin-box" type="text" placeholder="560067"></td>
+				  </tr>
+				</table>
+      </div>
+      <div class="modal-footer">
+				<a href="#Bill_Modal" role="button" data-toggle="modal" data-dismiss="modal" style="text-decoration:none;">
+					<div class="proceed_button">
+        		<p class="proceed">Proceed</p>
+					</div>
+				</a>
+				<br><br>
+			</div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- Modal for bills -->
+<div id="Bill_Modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+				<div style="clear: both">
+    			<h4 class="Create-New-Invoice" style="float: left">Create New Invoice</h4>
+    			<h4 class="Order-No"style="float: right">ORDER NO:</h4>
+				</div>
+				<div class="Customer-Details">
+					PRODUCT DETAILS
+				</div>
+				<a href="#Bill_Modal" role="button" data-toggle="modal" data-dismiss="modal" style="text-decoration:none;">
+					<div class="edit-button"></div>
+				</a>
+      </div>
+      <div class="modal-body">
+				<table>
+    			<tr>
+        		<th>Name</th>
+
+        		<th>Phone</th>
+    			</tr>
+    			{% for item in customer %}
+    			<tr>
+        		<td>{{ item.name }}</td>
+
+        		<td>{{ item.phone }}</td>
+    			</tr>
+    			{% endfor %}
+				</table>
+      </div>
+      <div class="modal-footer">
+				<a href="#Bill_Modal" role="button" data-toggle="modal" data-dismiss="modal" style="text-decoration:none;">
+					<div class="proceed_button">
+        		<p class="proceed">Save</p>
+					</div>
+				</a>
+				<br><br>
+			</div>
+    </div>
+
+  </div>
+</div>
+
+
+</body>
 </html>
