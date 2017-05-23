@@ -32,7 +32,7 @@ a.Dashboard:hover, a.Dashboard:active, a.Dashboard:visited, a.Dashboard:link {
   padding-top:20px;
   position: absolute;
 }
-input[name="Rectangle-2_1"] {
+#Rectangle-2_1 {
   width: 330px;
   height: 50px;
   border-radius: 100px;
@@ -49,6 +49,18 @@ input[name="Rectangle-2_1"] {
   background-color: rgb(47, 55, 64);
   position: absolute;
   margin-top: 198px;
+}
+p.invoices{
+  font-family: Montserrat;
+  font-size: 12px;
+  font-weight: 600;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 1px;
+  color: rgb(118, 126, 138);
+  margin-left: 20px;
+  margin-top: 25px;
 }
 .Rectangle-6 {
   width: 350px;
@@ -125,7 +137,7 @@ h4.Order-No {
   -moz-transform: scale(0.1);
   -ms-transform: scale(0.1);
   transform: scale(0.1);
-  top: 420px;
+  top: 380px;
   opacity: 0;
   -webkit-transition: all 0.3s;
   -moz-transition: all 0.3s;
@@ -142,6 +154,10 @@ h4.Order-No {
   -webkit-transform: translate3d(0, -300px, 0);
   transform: translate3d(0, -300px, 0);
   opacity: 1;
+}
+.modal-body {
+    max-height: 330px;
+    overflow-y: auto;
 }
 .proceed_button {
   width: 173px;
@@ -206,6 +222,14 @@ p.skip {
   letter-spacing: 1px;
   color: rgb(102, 167, 255);
 }
+.name_and_email{
+  position: absolute;
+  text-align: right;
+  top: 45px;
+  right: 70px;
+  height: 42px;
+  width: 250px;
+}
 .edit-button {
   width: 42px;
   height: 42px;
@@ -218,13 +242,13 @@ p.skip {
   background-repeat: no-repeat;
   position: absolute;
 }
-input[name="name-box"] {
+#name-box {
   width: 412px;
   height: 42px;
   border-radius: 3px;
   border: solid 1px rgb(208, 213, 222);
 }
-textarea[name="address-box"] {
+#address-box {
   width: 412px;
   height: 142px;
   border-radius: 3px;
@@ -232,13 +256,13 @@ textarea[name="address-box"] {
   background-color: var(--white);
   border: solid 1px rgb(208, 213, 222);
 }
-input[name="phone-box"] {
+#phone-box {
   width: 332px;
   height: 42px;
   border-radius: 3px;
   border: solid 1px rgb(208, 213, 222);
 }
-input[name="email-box"] {
+#email-box {
   width: 332px;
   height: 42px;
   border-radius: 3px;
@@ -246,11 +270,58 @@ input[name="email-box"] {
   background-color: var(--white);
   border: solid 1px rgb(208, 213, 222);
 }
-input[name="pin-box"] {
+#pin-box {
   width: 102px;
   height: 42px;
   border-radius: 3px;
   background-color: rgb(255, 255, 255);
   background-color: var(--white);
   border: solid 1px rgb(208, 213, 222);
+}
+#item-box {
+  width: 422px;
+  height: 42px;
+  border-radius: 3px;
+  background-color: rgb(255, 255, 255);
+  background-color: var(--white);
+  border: solid 1px rgb(208, 213, 222);
+}
+#quantity-box {
+  width: 141px;
+  height: 42px;
+  border-radius: 3px;
+  border: solid 1px rgb(208, 213, 222);
+}
+#price-box {
+  width: 111px;
+  height: 42px;
+  border-radius: 3px;
+  background-color: rgb(255, 255, 255);
+  background-color: var(--white);
+  border: solid 1px rgb(208, 213, 222);
+}
+.bill-table th {
+  font-family: Montserrat;
+  font-size: 12px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 0.7px;
+  color: rgb(180, 187, 197);
+  border-bottom: 1px solid;
+  padding-bottom: 15px;
+}
+.bill-table td {
+  font-family: Montserrat;
+  font-size: 13px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 0.7px;
+  color: rgb(56, 63, 72);
+  border-bottom: solid 1px rgb(202, 203, 206);
+  padding-top: 15px;
+  padding-bottom: 15px;
 }

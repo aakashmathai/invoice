@@ -9,13 +9,10 @@ class customer(models.Model):
 	pincode = models.CharField(max_length = 6)
 	date = models.DateTimeField(default=timezone.now)
 
-class products(models.Model):
-	product_name = models.CharField(max_length = 30)
-	product_price = models.IntegerField()
-
 class bills(models.Model):
 	phone = models.CharField(max_length = 15)
 	invoice_no = models.IntegerField()
 	item_no = models.IntegerField()
 	item = models.CharField(max_length = 30)
 	quantity = models.IntegerField()
+	price = models.IntegerField(default = 0)

@@ -9,9 +9,75 @@
 	<link rel="stylesheet" href="{% static "bootstrap/css/invoice.css" %}">
 	<script src="{% static 'bootstrap/jquery.min.js' %}"></script>
 	<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+	<SCRIPT language="javascript">
+		function addRow(tableID) {
+
+			var table = document.getElementById(tableID);
+
+			var rowCount = table.rows.length;
+			var previousRow = rowCount-1;
+			table.rows[previousRow].cells[6].innerHTML="";
+			var row = table.insertRow(rowCount);
+
+
+			var cell1 = row.insertCell(0);
+			var element1 = document.createElement("input");
+			element1.type = "text";
+			element1.name ="item-box"+rowCount;
+			element1.id ="item-box";
+			element1.placeholder = "Please Enter Item Name";
+			cell1.appendChild(element1);
+
+			var cell2 = row.insertCell(1);
+			cell2.innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+
+			var cell3 = row.insertCell(2);
+			var element2 = document.createElement("input");
+			element2.type = "text";
+			element2.name = "quantity-box"+rowCount;
+			element2.id = "quantity-box";
+			element2.placeholder = "0.00";
+			cell3.appendChild(element2);
+
+			var cell4 = row.insertCell(3);
+			cell4.innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+
+			var cell5 = row.insertCell(4);
+			var element3 = document.createElement("input");
+			element3.type = "text";
+			element3.name = "price-box"+rowCount;
+			element3.id = "price-box";
+			element3.placeholder = "0.00";
+			cell5.appendChild(element3);
+
+			var cell6 = row.insertCell(5);
+			cell6.innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+
+			var cell7 = row.insertCell(6);
+			cell7.innerHTML = "<a href=\"javascript:\" onclick=\"addRow('bill-table')\"><img src=\"static/images/enter1.png\" height='41px' width='50px'>";
+
+			document.getElementById("item_no").value=rowCount;
+		}
+		function getNameAndEmail() {
+			var name = document.getElementById("name-box").value;
+			var email = document.getElementById("email-box").value;
+			if (name=="")
+				name = "Unknown Customer"
+			name_and_email.innerHTML= name+"<br>"+email;
+		}
+		function skip(){
+			document.getElementById("hidden_data").value="skip";
+		}
+		function proceed(){
+			document.getElementById("hidden_data").value="proceed";
+		}
+
+
+</SCRIPT>
 </head>
 <body>
-
+<form method="post" id="newform" name="newform">
+{% csrf_token %}
 	<div class="invoice---01">
 		<div class="Rectangle">
 			<a class="Dashboard" href="{% url 'billing' %}">Dashboard</a>
@@ -29,7 +95,9 @@
 		</div>
 		<div class="Rectangle-6">
 			<div class="Rectangle-2">
-				<input name="Rectangle-2_1" type="text" placeholder="Search...">
+				<input id="Rectangle-2_1" type="text" placeholder="Search...">
+				<p class = "invoices">INVOICES - {{invoices}}</p>
+
 			</div>
 			<div class="Rectangle-list">
 
@@ -40,6 +108,7 @@
 
 
 	</div>
+
 
 <!-- Modal for Customer-Details -->
 <div id="Customer_Modal" class="modal fade" role="dialog">
@@ -56,13 +125,14 @@
 				<div class="Customer-Details">
 					CUSTOMER DETAILS
 				</div>
-				<a href="#Bill_Modal" role="button" data-toggle="modal" data-dismiss="modal" style="text-decoration:none;">
+				<a href="#Bill_Modal" onclick="javascript:skip();" role="button" data-toggle="modal" data-dismiss="modal" style="text-decoration:none;">
 					<div class="skip-button">
 						<p class="skip">SKIP</p>
 					</div>
 				</a>
       </div>
       <div class="modal-body">
+				<input type="hidden" id="hidden_data" name="hidden_data" value="ready">
 				<table>
 				  <tr>
 				    <th>Full Name</th>
@@ -70,9 +140,9 @@
 				    <th>Phone Number</th>
 				  </tr>
 				  <tr>
-				    <td><input name="name-box" type="text" placeholder="Customer Name" required></td>
+				    <td><input name="name-box" id="name-box" type="text" placeholder="Customer Name" required></td>
 						<td>&nbsp;&nbsp;&nbsp;</td>
-				    <td><input name="phone-box" type="text" placeholder="+91"></td>
+				    <td><input name="phone-box" id="phone-box" type="text" placeholder="+91"></td>
 				  </tr>
 				  <tr>
 				    <td>Address</td>
@@ -80,9 +150,9 @@
 				    <td>Email Id</td>
 				  </tr>
 				  <tr>
-				    <td rowspan="3"><textarea name="address-box" placeholder="Complete Address"></textarea></td>
+				    <td rowspan="3"><textarea id="address-box" name="address-box" placeholder="Complete Address"></textarea></td>
 						<td>&nbsp;&nbsp;&nbsp;</td>
-				    <td><input name="email-box" type="email" placeholder="Customer Email Address"></td>
+				    <td><input name="email-box" id="email-box" type="email" placeholder="Customer Email Address"></td>
 				  </tr>
 				  <tr>
 						<td>&nbsp;&nbsp;&nbsp;</td>
@@ -90,12 +160,12 @@
 				  </tr>
 				  <tr>
 						<td>&nbsp;&nbsp;&nbsp;</td>
-				    <td><input name="pin-box" type="text" placeholder="560067"></td>
+				    <td><input name="pin-box" id="pin-box" type="text" placeholder="560067"></td>
 				  </tr>
 				</table>
       </div>
       <div class="modal-footer">
-				<a href="#Bill_Modal" role="button" data-toggle="modal" data-dismiss="modal" style="text-decoration:none;">
+				<a href="#Bill_Modal" onclick="javascript:proceed();getNameAndEmail();" role="button" data-toggle="modal" data-dismiss="modal" style="text-decoration:none;">
 					<div class="proceed_button">
         		<p class="proceed">Proceed</p>
 					</div>
@@ -108,6 +178,7 @@
 </div>
 
 
+
 <!-- Modal for bills -->
 <div id="Bill_Modal" class="modal fade" role="dialog">
   <div class="modal-dialog">
@@ -118,33 +189,44 @@
         <button type="button" class="close" data-dismiss="modal">&times;</button>
 				<div style="clear: both">
     			<h4 class="Create-New-Invoice" style="float: left">Create New Invoice</h4>
-    			<h4 class="Order-No"style="float: right">ORDER NO:</h4>
+    			<h4 class="Order-No"style="float: right">ORDER NO:{{new}}</h4>
 				</div>
 				<div class="Customer-Details">
 					PRODUCT DETAILS
 				</div>
-				<a href="#Bill_Modal" role="button" data-toggle="modal" data-dismiss="modal" style="text-decoration:none;">
+				<div class="name_and_email" id="name_and_email">
+
+				</div>
+				<a href="#Customer_Modal" role="button" data-toggle="modal" data-dismiss="modal" style="text-decoration:none;">
 					<div class="edit-button"></div>
 				</a>
       </div>
       <div class="modal-body">
-				<table>
+				<table id="bill-table" class="bill-table">
     			<tr>
-        		<th>Name</th>
-
-        		<th>Phone</th>
+        		<th>Item</th>
+						<th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+        		<th>Quantity</th>
+						<th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+						<th>Price - ₹</th>
+						<th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+						<th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
     			</tr>
-    			{% for item in customer %}
     			<tr>
-        		<td>{{ item.name }}</td>
-
-        		<td>{{ item.phone }}</td>
-    			</tr>
-    			{% endfor %}
+        		<td><input name="item-box1" id="item-box" type="text" placeholder="Please Enter Item Name"></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+						<td><input name="quantity-box1" id="quantity-box" type="text" placeholder="0.00"></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+        		<td><input name="price-box1" id="price-box" type="text" placeholder="0.00"></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+						<td><a href="javascript:" onclick="addRow('bill-table')"><img src="static/images/enter1.png" height='41px' width='50px'></a></td>
+					</tr>
 				</table>
+				<input type="hidden" id="item_no" name="item_no" value="1">
+			</form>
       </div>
       <div class="modal-footer">
-				<a href="#Bill_Modal" role="button" data-toggle="modal" data-dismiss="modal" style="text-decoration:none;">
+				<a href="javascript:" onclick="document.forms.newform.submit();window.location.reload();" role="button" data-toggle="modal" style="text-decoration:none;">
 					<div class="proceed_button">
         		<p class="proceed">Save</p>
 					</div>
