@@ -3,6 +3,9 @@
 <html lang="en">
 <head>
 	<title>Invoice</title>
+	<meta http-equiv="cache-control" content="no-cache" />
+	<meta http-equiv="expires" content="0" />
+	<meta http-equiv="pragma" content="no-cache" />
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="{% static "bootstrap/css/bootstrap.min.css" %}">
@@ -24,7 +27,8 @@
 			var element1 = document.createElement("input");
 			element1.type = "text";
 			element1.name ="item-box"+rowCount;
-			element1.id ="item-box";
+			element1.id ="item-box"+rowCount;
+			element1.setAttribute("class","item-box");
 			element1.placeholder = "Please Enter Item Name";
 			cell1.appendChild(element1);
 
@@ -33,10 +37,12 @@
 
 			var cell3 = row.insertCell(2);
 			var element2 = document.createElement("input");
-			element2.type = "text";
+			element2.type = "number";
 			element2.name = "quantity-box"+rowCount;
-			element2.id = "quantity-box";
-			element2.placeholder = "0.00";
+			element2.setAttribute("class","quantity-box");
+			element2.setAttribute("onchange","updateSum();");
+			element2.id = "quantity-box"+rowCount;
+			element2.value = "0";
 			cell3.appendChild(element2);
 
 			var cell4 = row.insertCell(3);
@@ -44,10 +50,12 @@
 
 			var cell5 = row.insertCell(4);
 			var element3 = document.createElement("input");
-			element3.type = "text";
+			element3.type = "number";
 			element3.name = "price-box"+rowCount;
-			element3.id = "price-box";
-			element3.placeholder = "0.00";
+			element3.id = "price-box"+rowCount;
+			element3.setAttribute("class","price-box");
+			element3.setAttribute("onchange","updateSum();");
+			element3.value = "0";
 			cell5.appendChild(element3);
 
 			var cell6 = row.insertCell(5);
@@ -71,6 +79,48 @@
 		function proceed(){
 			document.getElementById("hidden_data").value="proceed";
 		}
+		function updateSum(){
+			var lines = document.getElementById("item_no").value;
+			var i = 0;
+			var price = 0;
+			var quantity = 0;
+			var sum = 0;
+			var taxAmount = 0;
+			var discountAmount = 0;
+			var grandTotal = 0;
+			var tax = document.getElementById("tax-box").value;
+			var discount = document.getElementById("discount-box").value;
+			for(i=1;i<=lines;i++){
+				var qua = "quantity-box"+i;
+				var pri = "price-box"+i;
+				quantity = document.getElementById(qua).value;
+				price = document.getElementById(pri).value;
+				sum = sum + (quantity*price);
+				taxAmount = (tax/100)*sum;
+				discountAmount = (discount/100)*sum;
+				grandTotal = taxAmount + sum - discountAmount;
+			}
+			document.getElementById("subtotal-box").value = sum;
+			document.getElementById("grandtotal-box").value = grandTotal;
+			document.getElementById("taxamount-box").value = taxAmount;
+			document.getElementById("discountamount-box").value = discountAmount;
+			document.getElementById("subtotal-box-1").value = sum;
+			document.getElementById("grandtotal-box-1").value = grandTotal;
+			document.getElementById("taxamount-box-1").value = taxAmount;
+			document.getElementById("discountamount-box-1").value = discountAmount;
+		}
+		function loadInvoice(invNo){
+			var invoice_1 = "<p class=\"invoice_text\">INVOICE</p>" +
+												"<p class=\"INV_text\">INV.#-"+invNo+"</p>";
+
+			var customer_1 = "<p class=\"customerdetails_text\">CUSTOMER DETAILS</P>"+
+												"<p class=\"name-1\">{{invoice_table.name}}</p>"+
+												"<p class=\"email-1\"></p>";
+
+
+			document.getElementById("invoice-1").innerHTML=invoice_1;
+			document.getElementById("customer-1").innerHTML=customer_1;
+		}
 
 
 </SCRIPT>
@@ -91,6 +141,21 @@
 			</div>
 		</a>
 		<div class="Rectangle-12">
+			<div class = "invoice-1" id="invoice-1"></div>
+			<div class="customer-1" id="customer-1"></div>
+			<div class="bill-history">
+				<table class="bill-history-table">
+					<tr><th>Item</th><th>Quantity</th><th>₹ - Price</th><tr>
+				</table>
+			</div>
+			<div class="bill-history-totals">
+				<table>
+					<tr><td>Sub Total</td><td></td></tr>
+					<tr><td>Tax()</td><td></td></tr>
+					<tr><td>Discount()</td><td></td></tr>
+					<tr><th>Grand Total</th><th></th></tr>
+				</table>
+			</div>
 
 		</div>
 		<div class="Rectangle-6">
@@ -100,7 +165,20 @@
 
 			</div>
 			<div class="Rectangle-list">
-
+				<table class="bill-list">
+					{% for record in invoice_table %}
+					<tr>
+						<td>
+							<a href="javascript:" onclick="loadInvoice({{record.invoice_no}});" style="text-decoration:none;">
+							<table style="width:348px;border:solid 1px rgb(202, 203, 206);">
+								<tr><td style="width:140px;">INV.# -{{record.invoice_no}}</td> <td style="width:170px;">{{record.date}}</td></tr>
+								<tr><td style="width:140px;">{{record.name}}</td><td style="width:170px;">₹ - {{record.grand_total}}</td></tr>
+							</table>
+						</a>
+						</td>
+					</tr>
+					{% endfor %}
+				</table>
 			</div>
 
 		</div>
@@ -142,7 +220,7 @@
 				  <tr>
 				    <td><input name="name-box" id="name-box" type="text" placeholder="Customer Name" required></td>
 						<td>&nbsp;&nbsp;&nbsp;</td>
-				    <td><input name="phone-box" id="phone-box" type="text" placeholder="+91"></td>
+				    <td><input name="phone-box" id="phone-box" type="text"></td>
 				  </tr>
 				  <tr>
 				    <td>Address</td>
@@ -213,24 +291,45 @@
 						<th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
     			</tr>
     			<tr>
-        		<td><input name="item-box1" id="item-box" type="text" placeholder="Please Enter Item Name"></td>
+        		<td><input name="item-box1" id="item-box1" class="item-box" type="text" placeholder="Please Enter Item Name"></td>
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-						<td><input name="quantity-box1" id="quantity-box" type="text" placeholder="0.00"></td>
+						<td><input name="quantity-box1" type="number" class="quantity-box" onchange="javascript:updateSum();" id="quantity-box1"  value="0"></td>
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-        		<td><input name="price-box1" id="price-box" type="text" placeholder="0.00"></td>
+        		<td><input name="price-box1" type="number" class="price-box" onchange="javascript:updateSum();" id="price-box1"  value="0"></td>
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 						<td><a href="javascript:" onclick="addRow('bill-table')"><img src="static/images/enter1.png" height='41px' width='50px'></a></td>
 					</tr>
 				</table>
-				<input type="text" name="tax-box" id="tax-box" placeholder="Tax">
-				<input type="text" name="discount-box" id="discount-box" placeholder="Discount">
+				<input type="text" name="tax-box" id="tax-box" placeholder="Tax" onchange="javascript:updateSum()">
+				<input type="text" name="discount-box" id="discount-box" placeholder="Discount" onchange="javascript:updateSum()">
+				<div class="total">
+					<p class="Subtotal">Sub Total:
+					<input type="number" name="subtotal-box" id="subtotal-box" value="0" disabled>
+					<input type="hidden" name="subtotal-box-1" id="subtotal-box-1" value ="0">
+					</p>
+				</div>
 				<input type="hidden" id="item_no" name="item_no" value="1">
 			</form>
       </div>
       <div class="modal-footer">
-				<a href="javascript:" onclick="document.forms.newform.submit();window.location.reload();" role="button" data-toggle="modal" style="text-decoration:none;">
-					<div class="proceed_button">
-        		<p class="proceed">Save</p>
+				<div class="taxAmount">
+					<h5 id="taxAmount-head">Tax</h5>
+					<input type="text" name="taxamount-box" id="taxamount-box" value="0" disabled>
+					<input type="hidden" name="taxamount-box-1" id="taxamount-box-1" value ="0">
+				</div>
+				<div class="discountAmount">
+					<h5 id="discountAmount-head">Discount</h5>
+					<input type="text" name="discountamount-box" id="discountamount-box" value="0" disabled>
+					<input type="hidden" name="discountamount-box-1" id="discountamount-box-1" value ="0">
+				</div>
+				<div class="grandTotal">
+					<h5 id="grandTotal-head">Grand Total</h5>
+					<input type="text" name="grandtotal-box" id="grandtotal-box" value="0" disabled>
+					<input type="hidden" name="grandtotal-box-1" id="grandtotal-box-1" value ="0">
+				</div>
+				<a href="javascript:" onclick="document.forms.newform.submit();" role="button" data-toggle="modal" style="text-decoration:none;">
+					<div class="save_button">
+        		<p class="save">Save</p>
 					</div>
 				</a>
 				<br><br>

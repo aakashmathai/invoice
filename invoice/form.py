@@ -1,14 +1,14 @@
 from django import forms
 from django.forms import ModelForm
-from invoice.models import customer, bills
+from invoice.models import invoice, items
 
-class CustomerForm(forms.ModelForm):
+class InvoiceForm(forms.ModelForm):
     address = forms.CharField(widget = forms.Textarea)
     class Meta:
-        model = customer
-        fields = ['name', 'address', 'phone', 'email', 'pincode']
+        model = invoice
+        fields = ['name', 'address', 'phone', 'email', 'pincode', 'invoice_no', 'tax_percent', 'discount_percent', 'sub_total', 'tax_amount', 'discount_amount', 'grand_total']
 
-class BillsForm(forms.ModelForm):
+class ItemsForm(forms.ModelForm):
     class Meta:
-        model = bills
-        fields = ['phone', 'invoice_no', 'item_no', 'item', 'quantity', 'price']
+        model = items
+        fields = ['invoice_no', 'item_no', 'item', 'quantity', 'price']

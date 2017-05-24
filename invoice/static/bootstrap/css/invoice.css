@@ -247,6 +247,7 @@ p.skip {
   height: 42px;
   border-radius: 3px;
   border: solid 1px rgb(208, 213, 222);
+  font-family: Montserrat;
 }
 #address-box {
   width: 412px;
@@ -261,6 +262,10 @@ p.skip {
   height: 42px;
   border-radius: 3px;
   border: solid 1px rgb(208, 213, 222);
+  background-image: url('../../images/91.png');
+  background-position: -25px -10px;
+  background-repeat: no-repeat;
+  padding-left: 80px;
 }
 #email-box {
   width: 332px;
@@ -278,7 +283,7 @@ p.skip {
   background-color: var(--white);
   border: solid 1px rgb(208, 213, 222);
 }
-#item-box {
+input.item-box {
   width: 422px;
   height: 42px;
   border-radius: 3px;
@@ -286,13 +291,13 @@ p.skip {
   background-color: var(--white);
   border: solid 1px rgb(208, 213, 222);
 }
-#quantity-box {
+input.quantity-box {
   width: 141px;
   height: 42px;
   border-radius: 3px;
   border: solid 1px rgb(208, 213, 222);
 }
-#price-box {
+input.price-box {
   width: 111px;
   height: 42px;
   border-radius: 3px;
@@ -330,14 +335,181 @@ p.skip {
   height: 42px;
   border-radius: 3px;
   background-color: rgb(255, 255, 255);
-  background-color: var(--white);
   border: solid 1px rgb(208, 213, 222);
+  padding-left: 10px;
+  margin-top: 20px;
+  background-image: url('../../images/percent.png');
+  background-position: 65px -5px;
+  background-repeat: no-repeat;
 }
 #discount-box{
   width: 121px;
   height: 42px;
   border-radius: 3px;
   background-color: rgb(255, 255, 255);
-  background-color: var(--white);
   border: solid 1px rgb(208, 213, 222);
+  padding-left: 10px;
+  margin-left: 30px;
+  background-image: url('../../images/percent.png');
+  background-position: 75px -5px;
+  background-repeat: no-repeat;
+}
+.total{
+  width: 220px;
+  height: 50px;
+  margin-left: 600px;
+  margin-top:-45px;
+}
+#subtotal-box{
+  width: 100px;
+  height: 42px;
+  border: 0px solid;
+  border: 0px solid;
+  font-family: Montserrat;
+  font-size: 15px;
+  font-weight: 600;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 0.9px;
+  color: rgb(0, 0, 0);
+  background-color: rgb(255,255,255);
+}
+.taxAmount{
+  width: 60px;
+  height: 50px;
+  margin-left :53px;
+  margin-top: -25px;
+}
+.discountAmount{
+  width: 60px;
+  height: 50px;
+  margin-left:183px;
+  margin-top: -60px;
+}
+.grandTotal{
+  width: 100px;
+  height: 50px;
+  margin-left: 508px;
+  margin-top: -60px;
+}
+#taxamount-box{
+  margin-top: -10px;
+  width: 60px;
+  height: 40px;
+  border: 0px solid;
+  font-family: Montserrat;
+  font-size: 15px;
+  font-weight: 600;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 0.9px;
+  color: rgb(180, 187, 197);
+  background-color: rgb(255,255,255);
+}
+#discountamount-box{
+  margin-top: -10px;
+  width: 60px;
+  height: 40px;
+  border: 0px solid;
+  font-family: Montserrat;
+  font-size: 15px;
+  font-weight: 600;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 0.9px;
+  color: rgb(180, 187, 197);
+  background-color: rgb(255,255,255);
+}
+#grandtotal-box{
+  margin-top: -10px;
+  width: 60px;
+  height: 40px;
+  border: 0px solid;
+  font-family: Montserrat;
+  font-size: 15px;
+  font-weight: 600;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 0.9px;
+  color: rgb(0, 0, 0);
+  background-color: rgb(255,255,255);
+}
+#taxAmount-head{
+  width: 25px;
+  height: 16px;
+  font-family: Montserrat;
+  font-size: 13px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 0.7px;
+  color: rgb(117, 125, 142);
+}
+#discountAmount-head{
+  width: 25px;
+  height: 16px;
+  font-family: Montserrat;
+  font-size: 13px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 0.7px;
+  color: rgb(117, 125, 142);
+}
+#grandTotal-head{
+  width: 120px;
+  height: 16px;
+  font-family: Montserrat;
+  font-size: 13px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 0.7px;
+  color: rgb(117, 125, 142);
+}
+.save_button{
+  width: 173px;
+  height: 44px;
+  border-radius: 3px;
+  background-color: rgb(71, 119, 173);
+  box-shadow: 0 2px 6px 0 rgba(102, 167, 255, 0.5);
+  text-align: center;
+  padding-left: 52px;
+  padding-top: 14px;
+  margin-left: 662px;
+  margin-top: -34px;
+  position: absolute;
+}
+p.save{
+  width: 70px;
+  height: 16px;
+  font-family: Montserrat;
+  font-size: 13px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 0.7px;
+  text-align: center;
+  color: rgb(255, 255, 255);
+}
+.bill-list td{
+  font-family: Montserrat;
+  font-size: 13px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 0.7px;
+  color: rgb(255, 255, 255);
+  border-bottom: solid 0px rgb(202, 203, 206);
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
