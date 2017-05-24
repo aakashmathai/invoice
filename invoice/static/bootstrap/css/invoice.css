@@ -325,3 +325,19 @@ p.skip {
   padding-top: 15px;
   padding-bottom: 15px;
 }
+#tax-box{
+  width: 111px;
+  height: 42px;
+  border-radius: 3px;
+  background-color: rgb(255, 255, 255);
+  background-color: var(--white);
+  border: solid 1px rgb(208, 213, 222);
+}
+#discount-box{
+  width: 121px;
+  height: 42px;
+  border-radius: 3px;
+  background-color: rgb(255, 255, 255);
+  background-color: var(--white);
+  border: solid 1px rgb(208, 213, 222);
+}
